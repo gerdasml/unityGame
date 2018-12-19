@@ -6,12 +6,21 @@ using UnityEngine.UI;
 public class Inventory : MonoBehaviour {
 
     public Image[] itemImages = new Image[numItemSlots];
-    public Item[] items = new Item[numItemSlots];
+    public InteractableObject[] items = new InteractableObject[numItemSlots];
 
     public const int numItemSlots = 4;
 
 
-    public void AddItem(Item itemToAdd)
+    public bool ContainsItem(InteractableObject interactable)
+    {
+        for(int i = 0; i < items.Length; i++)
+        {
+            if (items[i] == interactable) return true;
+        }
+        return false;
+    }
+
+    public void AddItem(InteractableObject itemToAdd)
     {
         for(int i = 0; i < items.Length; i++)
         {
@@ -25,7 +34,7 @@ public class Inventory : MonoBehaviour {
         }
     }
 
-    public void RemoveItem(Item itemToRemove)
+    public void RemoveItem(InteractableObject itemToRemove)
     {
         for (int i = 0; i < items.Length; i++)
         {

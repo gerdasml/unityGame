@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityStandardAssets.Characters.FirstPerson;
 
 public class Raycast : MonoBehaviour {
 
@@ -11,6 +12,7 @@ public class Raycast : MonoBehaviour {
     [SerializeField] private LayerMask layerMaskInteract;
     [SerializeField] private Image uiCrosshair;
     [SerializeField] private Inventory inventory;
+    public GameObject minimap;
 
     void Update()
     {
@@ -22,18 +24,43 @@ public class Raycast : MonoBehaviour {
         {
             if (hit.collider.CompareTag("InteractableObject")) 
             {
-                raycastedObj = hit.collider.gameObject;
-                crosshairActive(); // sita funkcija kvieciama, kai paziurim i objekta, turinti InteractableObject tag'a
-
-                if (Input.GetKeyDown("e"))
+                GameObject.Find("FPSController").GetComponent<FirstPersonController>().enabled = false;
+                if(raycastedObj != null && raycastedObj != hit.collider.gameObject)
                 {
-                    Debug.Log("I HAVE INTERACTED WITH AN OBJECT");
-                    raycastedObj.SetActive(false);
-                    var shit = raycastedObj.GetComponent<InteractableObject>();
-                    var item = new Item();
-                    item.sprite = shit.sprite;
-                    inventory.AddItem(item);
-                    //Destroy(raycastedObj);
+                    CrossHairNormal();
+                }
+                raycastedObj = hit.collider.gameObject;
+                while(raycastedObj.transform.parent != null)
+                {
+                    raycastedObj = raycastedObj.transform.parent.gameObject;
+                }
+                InteractableObject interactable = raycastedObj.GetComponent<InteractableObject>();
+                if(interactable.dependencies.TrueForAll(d => inventory.ContainsItem(d)))
+                {
+                    crosshairActive(); // sita funkcija kvieciama, kai paziurim i objekta, turinti InteractableObject tag'a
+
+                    if (Input.GetKeyDown("e"))
+                    {
+                        Debug.Log("I HAVE INTERACTED WITH AN OBJECT");
+
+                        foreach(var d in interactable.dependencies)
+                        {
+                            inventory.RemoveItem(d);
+                        }
+
+                        raycastedObj.SetActive(false);
+                        inventory.AddItem(interactable);
+                        //Destroy(raycastedObj);
+                        if(raycastedObj.name == "map")
+                        {
+                            inventory.RemoveItem(interactable);
+                            minimap.SetActive(true);
+                        }
+                    }
+                }
+                else
+                {
+                    CrossHairNormal();
                 }
             }
         }
@@ -48,7 +75,7 @@ public class Raycast : MonoBehaviour {
         uiCrosshair.color = Color.red;
         if(raycastedObj != null)
         {
-            raycastedObj.GetComponent<Renderer>().material.color = Color.cyan; // kai ziurim, pakeiciu objekto spalva i raudona
+            ChangeObjectColor(Color.cyan);
         }
     }
 
@@ -57,7 +84,22 @@ public class Raycast : MonoBehaviour {
         uiCrosshair.color = Color.white;
         if (raycastedObj != null)
         {
-            raycastedObj.GetComponent<Renderer>().material.color = Color.white; // kitu atveju pakeiciu i balta (pasirodo tai tas pats kaip neturet spalvos kazkodel)
+            ChangeObjectColor(Color.white);
+        }
+    }
+
+    void ChangeObjectColor(Color color)
+    {
+        if (raycastedObj.GetComponent<Renderer>() == null)
+        {
+            foreach (var r in raycastedObj.GetComponentsInChildren<Renderer>())
+            {
+                r.material.color = color;
+            }
+        }
+        else
+        {
+            raycastedObj.GetComponent<Renderer>().material.color = color; // kai ziurim, pakeiciu objekto spalva i raudona
         }
     }
 }
