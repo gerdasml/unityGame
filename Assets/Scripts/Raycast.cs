@@ -12,6 +12,8 @@ public class Raycast : MonoBehaviour {
     [SerializeField] private Image uiCrosshair;
     [SerializeField] private Inventory inventory;
     [SerializeField] private ScreenManager screenManager;
+    [SerializeField] private GameObject board;
+    [SerializeField] private Text boardUnlockText;
     public GameObject minimap;
 
     void Update()
@@ -58,7 +60,8 @@ public class Raycast : MonoBehaviour {
                     CrossHairNormal();
                 }
             }
-            else if (hit.collider.CompareTag("ComputerPanelEntry")) {
+            else if (hit.collider.CompareTag("ComputerPanelEntry"))
+            {
                 if (raycastedObj != null && raycastedObj != hit.collider.gameObject)
                 {
                     CrossHairNormal();
@@ -73,6 +76,30 @@ public class Raycast : MonoBehaviour {
                     {
                         Debug.Log("I HAVE INTERACTED WITH A COMPUTER");
                         screenManager.OpenScreen();
+                    }
+                }
+                else
+                {
+                    CrossHairNormal();
+                }
+            }
+            else if (hit.collider.CompareTag("UICollider"))
+            {
+                if (raycastedObj != null && raycastedObj != hit.collider.gameObject.transform.Find("Text").gameObject)
+                {
+                    CrossHairNormal();
+                }
+                raycastedObj = hit.collider.gameObject.transform.Find("Text").gameObject;
+                var deps = hit.collider.gameObject.GetComponent<InteractableText>().dependencies;
+                if(deps.TrueForAll(d => inventory.ContainsItem(d)))
+                {
+                    crosshairActive();
+                    if (Input.GetKeyDown("e"))
+                    {
+                        if (hit.collider.gameObject.GetComponent<InteractableText>().text == boardUnlockText)
+                        {
+                            Destroy(board.GetComponent<FixedJoint>());
+                        }
                     }
                 }
                 else
@@ -116,16 +143,20 @@ public class Raycast : MonoBehaviour {
 
     void ChangeObjectColor(Color color)
     {
-        if (raycastedObj.GetComponent<Renderer>() == null)
+        if (raycastedObj.GetComponent<Renderer>() != null)
+        {
+            raycastedObj.GetComponent<Renderer>().material.color = color; // kai ziurim, pakeiciu objekto spalva i raudona
+        }
+        else if(raycastedObj.GetComponent<Text>() != null)
+        {
+            raycastedObj.GetComponent<Text>().color = color;
+        }
+        else
         {
             foreach (var r in raycastedObj.GetComponentsInChildren<Renderer>())
             {
                 r.material.color = color;
             }
-        }
-        else
-        {
-            raycastedObj.GetComponent<Renderer>().material.color = color; // kai ziurim, pakeiciu objekto spalva i raudona
         }
     }
 }
