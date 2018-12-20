@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityStandardAssets.Characters.FirstPerson;
 
 public class Raycast : MonoBehaviour {
 
@@ -12,6 +11,7 @@ public class Raycast : MonoBehaviour {
     [SerializeField] private LayerMask layerMaskInteract;
     [SerializeField] private Image uiCrosshair;
     [SerializeField] private Inventory inventory;
+    [SerializeField] private ScreenManager screenManager;
     public GameObject minimap;
 
     void Update()
@@ -19,23 +19,18 @@ public class Raycast : MonoBehaviour {
         RaycastHit hit;
         Vector3 fwd = transform.TransformDirection(Vector3.forward);
 
-        if(Physics.Raycast(transform.position, fwd, out hit, rayLengt, layerMaskInteract.value))
+        if (Physics.Raycast(transform.position, fwd, out hit, rayLengt, layerMaskInteract.value))
         //if (Physics.SphereCast(transform.position, 50, fwd, out hit, 0, layerMaskInteract.value))
         {
-            if (hit.collider.CompareTag("InteractableObject")) 
+            if (hit.collider.CompareTag("InteractableObject"))
             {
-                GameObject.Find("FPSController").GetComponent<FirstPersonController>().enabled = false;
-                if(raycastedObj != null && raycastedObj != hit.collider.gameObject)
+                if (raycastedObj != null && raycastedObj != hit.collider.gameObject)
                 {
                     CrossHairNormal();
                 }
-                raycastedObj = hit.collider.gameObject;
-                while(raycastedObj.transform.parent != null)
-                {
-                    raycastedObj = raycastedObj.transform.parent.gameObject;
-                }
+                raycastedObj = GetTopMostParent(hit.collider.gameObject);
                 InteractableObject interactable = raycastedObj.GetComponent<InteractableObject>();
-                if(interactable.dependencies.TrueForAll(d => inventory.ContainsItem(d)))
+                if (interactable != null && interactable.dependencies.TrueForAll(d => inventory.ContainsItem(d)))
                 {
                     crosshairActive(); // sita funkcija kvieciama, kai paziurim i objekta, turinti InteractableObject tag'a
 
@@ -43,7 +38,7 @@ public class Raycast : MonoBehaviour {
                     {
                         Debug.Log("I HAVE INTERACTED WITH AN OBJECT");
 
-                        foreach(var d in interactable.dependencies)
+                        foreach (var d in interactable.dependencies)
                         {
                             inventory.RemoveItem(d);
                         }
@@ -51,11 +46,33 @@ public class Raycast : MonoBehaviour {
                         raycastedObj.SetActive(false);
                         inventory.AddItem(interactable);
                         //Destroy(raycastedObj);
-                        if(raycastedObj.name == "map")
+                        if (raycastedObj.name == "map")
                         {
                             inventory.RemoveItem(interactable);
                             minimap.SetActive(true);
                         }
+                    }
+                }
+                else
+                {
+                    CrossHairNormal();
+                }
+            }
+            else if (hit.collider.CompareTag("ComputerPanelEntry")) {
+                if (raycastedObj != null && raycastedObj != hit.collider.gameObject)
+                {
+                    CrossHairNormal();
+                }
+                raycastedObj = GetTopMostParent(hit.collider.gameObject);
+                InteractableObject interactable = raycastedObj.GetComponent<InteractableObject>();
+                if (interactable != null && interactable.dependencies.TrueForAll(d => inventory.ContainsItem(d)))
+                {
+                    crosshairActive(); // sita funkcija kvieciama, kai paziurim i objekta, turinti InteractableObject tag'a
+
+                    if (Input.GetKeyDown("e"))
+                    {
+                        Debug.Log("I HAVE INTERACTED WITH A COMPUTER");
+                        screenManager.OpenScreen();
                     }
                 }
                 else
@@ -68,6 +85,15 @@ public class Raycast : MonoBehaviour {
         {
             CrossHairNormal(); // sita funkcija kvieciama kai neziurim
         }
+    }
+
+    GameObject GetTopMostParent(GameObject obj)
+    {
+        while (obj.transform.parent != null)
+        {
+            obj = obj.transform.parent.gameObject;
+        }
+        return obj;
     }
 
     void crosshairActive()
