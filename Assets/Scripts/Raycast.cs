@@ -111,6 +111,15 @@ public class Raycast : MonoBehaviour {
                     CrossHairNormal();
                 }
             }
+            else if (hit.collider.CompareTag("InteractableInstruction"))
+            {
+                raycastedObj = hit.collider.gameObject;
+                crosshairActive();
+                if (Input.GetKeyDown("e"))
+                {
+                    raycastedObj.SetActive(false);
+                }
+            }
         }
         else
         {
@@ -132,7 +141,14 @@ public class Raycast : MonoBehaviour {
         uiCrosshair.color = Color.red;
         if(raycastedObj != null)
         {
-            ChangeObjectColor(Color.cyan);
+            if (raycastedObj.GetComponent<Image>() != null)
+            {
+                ChangeObjectColor(new Color(0, 255, 255, 0.85f));
+            }
+            else
+            {
+                ChangeObjectColor(Color.cyan);
+            }
         }
     }
 
@@ -141,7 +157,14 @@ public class Raycast : MonoBehaviour {
         uiCrosshair.color = Color.white;
         if (raycastedObj != null)
         {
-            ChangeObjectColor(Color.white);
+            if (raycastedObj.GetComponent<Image>() != null)
+            {
+                ChangeObjectColor(new Color(0, 0, 0, 0.85f));
+            }
+            else
+            {
+                ChangeObjectColor(Color.white);
+            }
         }
     }
 
@@ -154,6 +177,10 @@ public class Raycast : MonoBehaviour {
         else if(raycastedObj.GetComponent<Text>() != null)
         {
             raycastedObj.GetComponent<Text>().color = color;
+        }
+        else if(raycastedObj.GetComponent<Image>() != null)
+        {
+            raycastedObj.GetComponent<Image>().color = color;
         }
         else
         {
