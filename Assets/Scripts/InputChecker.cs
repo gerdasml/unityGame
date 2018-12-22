@@ -10,12 +10,19 @@ public class InputChecker : MonoBehaviour {
     public ScreenManager screenManager;
     public GameObject lockedObject;
     public GameObject computer;
-    
-	void Update () {
-        if(Input.GetKeyDown(KeyCode.Return))
+    public Inventory inventory;
+
+    void Update () {
+        if (Input.GetKeyDown(KeyCode.Return))
         {
 	        if (input.text == secretPhrase)
             {
+                List<InteractableObject> dependencies = computer.GetComponent<InteractableObject>().dependencies;
+                foreach (var d in dependencies)
+                {
+                    inventory.RemoveItem(d);
+                }
+
                 screenManager.CloseScreen();
                 lockedObject.SetActive(true);
                 Destroy(computer.GetComponent<InteractableObject>());

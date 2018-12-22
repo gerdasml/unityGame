@@ -98,6 +98,10 @@ public class Raycast : MonoBehaviour {
                     {
                         if (hit.collider.gameObject.GetComponent<InteractableText>().text == boardUnlockText)
                         {
+                            foreach (var d in deps)
+                            {
+                                inventory.RemoveItem(d);
+                            }
                             Destroy(board.GetComponent<FixedJoint>());
                         }
                     }
