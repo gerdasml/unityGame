@@ -15,6 +15,7 @@ public class Raycast : MonoBehaviour {
     [SerializeField] private GameObject board;
     [SerializeField] private Text boardUnlockText;
     public GameObject minimap;
+    public ScreenManager endGameScreenManager;
 
     void Update()
     {
@@ -52,6 +53,11 @@ public class Raycast : MonoBehaviour {
                         {
                             inventory.RemoveItem(interactable);
                             minimap.SetActive(true);
+                        }
+                        if (raycastedObj.name == "padlock")
+                        {
+                            inventory.RemoveItem(interactable);
+                            endGameScreenManager.OpenScreen();
                         }
                     }
                 }
