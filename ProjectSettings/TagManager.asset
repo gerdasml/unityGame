@@ -8,6 +8,7 @@ TagManager:
   - ComputerPanelEntry
   - UICollider
   - InteractableInstruction
+  - InteractableCube
   layers:
   - Default
   - TransparentFX

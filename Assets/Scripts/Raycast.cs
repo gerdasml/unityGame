@@ -17,13 +17,17 @@ public class Raycast : MonoBehaviour {
     public GameObject minimap;
     public ScreenManager endGameScreenManager;
 
+    private IInteractionHandler<InteractableObjectData> interactableObjectHandler = new InteractableObjectHandler();
+    private IInteractionHandler<ComputerPanelEntryData> computerPanelEntryHandler = new ComputerPanelEntryHandler();
+    private IInteractionHandler<UIColliderData> uiColliderHandler = new UIColliderHandler();
+    private IInteractionHandler<InteractableCubeData> interactableCubeHandler = new InteractableCubeHandler();
+
     void Update()
     {
         RaycastHit hit;
         Vector3 fwd = transform.TransformDirection(Vector3.forward);
 
         if (Physics.Raycast(transform.position, fwd, out hit, rayLengt, layerMaskInteract.value))
-        //if (Physics.SphereCast(transform.position, 50, fwd, out hit, 0, layerMaskInteract.value))
         {
             if (hit.collider.CompareTag("InteractableObject"))
             {
@@ -33,38 +37,15 @@ public class Raycast : MonoBehaviour {
                 }
                 raycastedObj = GetTopMostParent(hit.collider.gameObject);
                 InteractableObject interactable = raycastedObj.GetComponent<InteractableObject>();
-                if (interactable != null && interactable.dependencies.TrueForAll(d => inventory.ContainsItem(d)))
+                interactableObjectHandler.Handle(new InteractableObjectData
                 {
-                    crosshairActive(); // sita funkcija kvieciama, kai paziurim i objekta, turinti InteractableObject tag'a
-
-                    if (Input.GetKeyDown("e"))
-                    {
-                        Debug.Log("I HAVE INTERACTED WITH AN OBJECT");
-
-                        foreach (var d in interactable.dependencies)
-                        {
-                            inventory.RemoveItem(d);
-                        }
-
-                        raycastedObj.SetActive(false);
-                        inventory.AddItem(interactable);
-                        //Destroy(raycastedObj);
-                        if (raycastedObj.name == "map")
-                        {
-                            inventory.RemoveItem(interactable);
-                            minimap.SetActive(true);
-                        }
-                        if (raycastedObj.name == "padlock")
-                        {
-                            inventory.RemoveItem(interactable);
-                            endGameScreenManager.OpenScreen();
-                        }
-                    }
-                }
-                else
-                {
-                    CrossHairNormal();
-                }
+                    RaycastedObj = raycastedObj,
+                    EndGameScreenManager = endGameScreenManager,
+                    Hit = hit,
+                    Interactable = interactable,
+                    Inventory = inventory,
+                    Minimap = minimap
+                }, crosshairActive, CrossHairNormal);
             }
             else if (hit.collider.CompareTag("ComputerPanelEntry"))
             {
@@ -74,20 +55,12 @@ public class Raycast : MonoBehaviour {
                 }
                 raycastedObj = GetTopMostParent(hit.collider.gameObject);
                 InteractableObject interactable = raycastedObj.GetComponent<InteractableObject>();
-                if (interactable != null && interactable.dependencies.TrueForAll(d => inventory.ContainsItem(d)))
+                computerPanelEntryHandler.Handle(new ComputerPanelEntryData
                 {
-                    crosshairActive(); // sita funkcija kvieciama, kai paziurim i objekta, turinti InteractableObject tag'a
-
-                    if (Input.GetKeyDown("e"))
-                    {
-                        Debug.Log("I HAVE INTERACTED WITH A COMPUTER");
-                        screenManager.OpenScreen();
-                    }
-                }
-                else
-                {
-                    CrossHairNormal();
-                }
+                    Interactable = interactable,
+                    Inventory = inventory,
+                    ScreenManager = screenManager
+                }, crosshairActive, CrossHairNormal);
             }
             else if (hit.collider.CompareTag("UICollider"))
             {
@@ -96,26 +69,13 @@ public class Raycast : MonoBehaviour {
                     CrossHairNormal();
                 }
                 raycastedObj = hit.collider.gameObject.transform.Find("Text").gameObject;
-                var deps = hit.collider.gameObject.GetComponent<InteractableText>().dependencies;
-                if(deps.TrueForAll(d => inventory.ContainsItem(d)))
+                uiColliderHandler.Handle(new UIColliderData
                 {
-                    crosshairActive();
-                    if (Input.GetKeyDown("e"))
-                    {
-                        if (hit.collider.gameObject.GetComponent<InteractableText>().text == boardUnlockText)
-                        {
-                            foreach (var d in deps)
-                            {
-                                inventory.RemoveItem(d);
-                            }
-                            Destroy(board.GetComponent<FixedJoint>());
-                        }
-                    }
-                }
-                else
-                {
-                    CrossHairNormal();
-                }
+                    Board = board,
+                    BoardUnlockText = boardUnlockText,
+                    Hit = hit,
+                    Inventory = inventory
+                }, crosshairActive, CrossHairNormal);
             }
             else if (hit.collider.CompareTag("InteractableInstruction"))
             {
@@ -125,6 +85,22 @@ public class Raycast : MonoBehaviour {
                 {
                     raycastedObj.SetActive(false);
                 }
+            }
+            else if (hit.collider.CompareTag("InteractableCube"))
+            {
+                if (raycastedObj != null && raycastedObj != hit.collider.gameObject)
+                {
+                    CrossHairNormal();
+                }
+                raycastedObj = hit.collider.gameObject;
+                InteractableObject interactable = raycastedObj.GetComponent<InteractableObject>();
+                PickupableObject pickupable = raycastedObj.GetComponent<PickupableObject>();
+                interactableCubeHandler.Handle(new InteractableCubeData
+                {
+                    Interactable = interactable,
+                    Inventory = inventory,
+                    Pickupable = pickupable
+                }, crosshairActive, CrossHairNormal);
             }
         }
         else
