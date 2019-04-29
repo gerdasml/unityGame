@@ -10,6 +10,8 @@ public class PuzzleConfig {
     private ComputerPuzzleConfig computer;
     [SerializeField]
     private WordBoardPuzzleConfig wordBoard;
+    [SerializeField]
+    private QuizPuzzleConfig quiz;
 
     public ComputerPuzzleConfig Computer
     {
@@ -26,4 +28,6 @@ public class PuzzleConfig {
             return wordBoard;
         }
     }
+
+    public QuizPuzzleConfig Quiz { get { return quiz; } }
 }

@@ -1,0 +1,18 @@
+{
+  "puzzles": {
+    "quiz": {
+      "numberOfAnswersNeeded": 5,
+      "questions": [
+        {
+          "text": "bla",
+          "choices": [
+            {
+              "text": "bla bla",
+              "isCorrect":  true
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
