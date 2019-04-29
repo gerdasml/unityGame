@@ -7,7 +7,7 @@ public class ComputerPanelEntryData
 {
     public Inventory Inventory { get; set; }
     public InteractableObject Interactable { get; set; }
-    public ScreenManager ScreenManager { get; set; }
+    public UIEntryPoint UIEntryPoint { get; set; }
 }
 
 public class ComputerPanelEntryHandler : IInteractionHandler<ComputerPanelEntryData>
@@ -17,11 +17,10 @@ public class ComputerPanelEntryHandler : IInteractionHandler<ComputerPanelEntryD
         if (data.Interactable != null && data.Interactable.dependencies.TrueForAll(d => data.Inventory.ContainsItem(d)))
         {
             activateCrosshair(); // sita funkcija kvieciama, kai paziurim i objekta, turinti InteractableObject tag'a
-
             if (Input.GetKeyDown("e"))
             {
                 Debug.Log("I HAVE INTERACTED WITH A COMPUTER");
-                data.ScreenManager.OpenScreen();
+                data.UIEntryPoint.screenManager.OpenScreen();
             }
         }
         else

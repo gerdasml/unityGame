@@ -11,7 +11,6 @@ public class Raycast : MonoBehaviour {
     [SerializeField] private LayerMask layerMaskInteract;
     [SerializeField] private Image uiCrosshair;
     [SerializeField] private Inventory inventory;
-    [SerializeField] private ScreenManager screenManager;
     [SerializeField] private GameObject board;
     [SerializeField] private Text boardUnlockText;
     public GameObject minimap;
@@ -55,11 +54,12 @@ public class Raycast : MonoBehaviour {
                 }
                 raycastedObj = GetTopMostParent(hit.collider.gameObject);
                 InteractableObject interactable = raycastedObj.GetComponent<InteractableObject>();
+                UIEntryPoint uiEntryPoint = raycastedObj.GetComponent<UIEntryPoint>();
                 computerPanelEntryHandler.Handle(new ComputerPanelEntryData
                 {
                     Interactable = interactable,
                     Inventory = inventory,
-                    ScreenManager = screenManager
+                    UIEntryPoint = uiEntryPoint
                 }, crosshairActive, CrossHairNormal);
             }
             else if (hit.collider.CompareTag("UICollider"))
