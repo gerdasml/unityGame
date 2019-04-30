@@ -7,15 +7,15 @@ using UnityEngine;
 public class WordBoardPuzzleConfig {
 
     [SerializeField]
-    private List<string> words;
+    private List<string> incorectWords;
     [SerializeField]
     private List<string> correctWords;
 
-    public List<string> Words
+    public List<string> IncorrectWords
     {
         get
         {
-            return words;
+            return incorectWords;
         }
     }
 

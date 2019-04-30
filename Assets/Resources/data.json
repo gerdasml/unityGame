@@ -50,6 +50,10 @@
     "computer": {
       "code": "What is 2+2x2+2",
       "expectedAnswer": "8"
+    },
+    "wordBoard": {
+      "incorrectWords": ["something", "brooklyn 99", "avengers", "one more word", "retriver", "balz", "answer", "computer"],
+      "correctWords": ["golden"]
     }
   }
 }

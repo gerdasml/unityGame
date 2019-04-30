@@ -69,12 +69,15 @@ public class Raycast : MonoBehaviour {
                     CrossHairNormal();
                 }
                 raycastedObj = hit.collider.gameObject.transform.Find("Text").gameObject;
+                var board = GetTopMostParent(raycastedObj);
+                var boardHandler = board.GetComponent<BoardHandler>();
                 uiColliderHandler.Handle(new UIColliderData
                 {
                     Board = board,
                     BoardUnlockText = boardUnlockText,
                     Hit = hit,
-                    Inventory = inventory
+                    Inventory = inventory,
+                    BoardHandler = boardHandler
                 }, crosshairActive, CrossHairNormal);
             }
             else if (hit.collider.CompareTag("InteractableInstruction"))

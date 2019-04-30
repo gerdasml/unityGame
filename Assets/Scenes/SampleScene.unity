@@ -285,7 +285,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Brooklyn 99
+  m_Text: 
 --- !u!222 &4488006
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -360,7 +360,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Golden
+  m_Text: 
 --- !u!222 &18836097
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6176,6 +6176,7 @@ GameObject:
   - component: {fileID: 369010809}
   - component: {fileID: 369010812}
   - component: {fileID: 369010811}
+  - component: {fileID: 369010814}
   - component: {fileID: 369010813}
   m_Layer: 10
   m_Name: Blackboard
@@ -6283,6 +6284,28 @@ FixedJoint:
   m_EnablePreprocessing: 1
   m_MassScale: 1
   m_ConnectedMassScale: 1
+--- !u!114 &369010814
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 369010807}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 941de1ad5fdd0774c9221fa4ac05729b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  choices:
+  - {fileID: 1848945108}
+  - {fileID: 1013475642}
+  - {fileID: 350790307}
+  - {fileID: 872545803}
+  - {fileID: 1338227120}
+  - {fileID: 317151735}
+  - {fileID: 102030253}
+  - {fileID: 2055223082}
+  - {fileID: 1453419278}
+  correctAnswer: 
 --- !u!1 &369350551
 GameObject:
   m_ObjectHideFlags: 0
@@ -9294,7 +9317,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Enter "qwertyuiop"
+  m_Text: 
 --- !u!222 &536900501
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -13668,7 +13691,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Ginger tea
+  m_Text: 
 --- !u!222 &746957809
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -14332,7 +14355,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: McDonald's
+  m_Text: 
 --- !u!222 &782001792
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -15604,7 +15627,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Retriever
+  m_Text: 
 --- !u!222 &838373876
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -24470,7 +24493,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 1984
+  m_Text: 
 --- !u!222 &1291668401
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -26144,7 +26167,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Bongo cat
+  m_Text: 
 --- !u!222 &1342644502
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -26742,7 +26765,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1366896884}
   m_LocalRotation: {x: -0.12535544, y: 0.07028458, z: 0.00890261, w: 0.98957914}
-  m_LocalPosition: {x: 226.89381, y: -0.8956928, z: 288.67578}
+  m_LocalPosition: {x: 87.15939, y: -1.6604576, z: 242.27997}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -30963,7 +30986,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: This is the answer
+  m_Text: 
 --- !u!222 &1610354848
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -37471,7 +37494,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Fast and furious
+  m_Text: 
 --- !u!222 &1933230679
 CanvasRenderer:
   m_ObjectHideFlags: 0

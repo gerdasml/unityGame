@@ -10,6 +10,7 @@ public class UIColliderData
     public RaycastHit Hit { get; set; }
     public Text BoardUnlockText { get; set; }
     public GameObject Board { get; set; }
+    public BoardHandler BoardHandler { get; set; }
 }
 
 public class UIColliderHandler : IInteractionHandler<UIColliderData>
@@ -22,13 +23,17 @@ public class UIColliderHandler : IInteractionHandler<UIColliderData>
             activateCrosshair();
             if (Input.GetKeyDown("e"))
             {
-                if (data.Hit.collider.gameObject.GetComponent<InteractableText>().text == data.BoardUnlockText)
+                if (data.Hit.collider.gameObject.GetComponent<InteractableText>().text.text == data.BoardHandler.correctAnswer)
                 {
                     foreach (var d in deps)
                     {
                         data.Inventory.RemoveItem(d);
                     }
                     UnityEngine.Object.Destroy(data.Board.GetComponent<FixedJoint>());
+                }
+                else
+                {
+                    data.BoardHandler.Reshuffle();
                 }
             }
         }
