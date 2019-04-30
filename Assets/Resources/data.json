@@ -1,14 +1,47 @@
-{
+﻿{
   "puzzles": {
     "quiz": {
-      "numberOfAnswersNeeded": 5,
+      "numberOfAnswersNeeded": 2,
       "questions": [
         {
-          "text": "bla",
+          "text": "Kada vyko Žalgirio mūšis?",
           "choices": [
             {
-              "text": "bla bla",
-              "isCorrect":  true
+              "text": "1410",
+              "isCorrect": true
+            },
+            {
+              "text": "1414",
+              "isCorrect": false
+            },
+            {
+              "text": "1234",
+              "isCorrect": false
+            },
+            {
+              "text": "2002",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "text": "Lietuvos nepriklausomybės atkūrimo diena",
+          "choices": [
+            {
+              "text": "Vasario 16",
+              "isCorrect": false
+            },
+            {
+              "text": "Kovo 11",
+              "isCorrect": true
+            },
+            {
+              "text": "Vasario 21",
+              "isCorrect": false
+            },
+            {
+              "text": "Balandžio 17",
+              "isCorrect": false
             }
           ]
         }
