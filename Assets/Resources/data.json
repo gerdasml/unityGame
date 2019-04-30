@@ -46,6 +46,10 @@
           ]
         }
       ]
+    },
+    "computer": {
+      "code": "What is 2+2x2+2",
+      "expectedAnswer": "8"
     }
   }
 }

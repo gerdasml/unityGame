@@ -5,12 +5,19 @@ using UnityEngine.UI;
 
 public class InputChecker : MonoBehaviour {
 
-    public string secretPhrase;
     public InputField input;
     public ScreenManager screenManager;
     public GameObject lockedObject;
     public GameObject computer;
     public Inventory inventory;
+    public Text taskText;
+    private string secretPhrase;
+
+    void Start()
+    {
+        secretPhrase = Config.Instance.Puzzle.Computer.ExpectedAnswer;
+        taskText.text = Config.Instance.Puzzle.Computer.Code;
+    }
 
     void Update () {
         if (Input.GetKeyDown(KeyCode.Return))

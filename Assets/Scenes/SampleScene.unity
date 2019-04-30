@@ -19375,12 +19375,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b5ff4a01cb01a041a768d53725e43b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  secretPhrase: qwertyuiop
   input: {fileID: 1032252037}
   screenManager: {fileID: 1394979222}
   lockedObject: {fileID: 455706401}
   computer: {fileID: 2014229801}
   inventory: {fileID: 795356492}
+  taskText: {fileID: 536900500}
 --- !u!1001 &1036194720
 Prefab:
   m_ObjectHideFlags: 0
@@ -26742,7 +26742,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1366896884}
   m_LocalRotation: {x: -0.12535544, y: 0.07028458, z: 0.00890261, w: 0.98957914}
-  m_LocalPosition: {x: 258.98267, y: -404.25922, z: -462.96326}
+  m_LocalPosition: {x: 226.89381, y: -0.8956928, z: 288.67578}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -39201,7 +39201,9 @@ MonoBehaviour:
   - {fileID: 594207260}
   - {fileID: 1047985382}
   - {fileID: 1140909346}
-  requiredAnswers: 5
+  screenManager: {fileID: 2035118704}
+  tv: {fileID: 623655271}
+  lockedObject: {fileID: 0}
 --- !u!1 &2039023509
 GameObject:
   m_ObjectHideFlags: 0
