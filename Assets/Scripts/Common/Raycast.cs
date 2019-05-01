@@ -17,6 +17,7 @@ public class Raycast : MonoBehaviour {
     public ScreenManager endGameScreenManager;
 
     private IInteractionHandler<InteractableObjectData> interactableObjectHandler = new InteractableObjectHandler();
+    private IInteractionHandler<InteractableParrotData> interactableParrotHandler = new InteractableParrotHandler();
     private IInteractionHandler<ComputerPanelEntryData> computerPanelEntryHandler = new ComputerPanelEntryHandler();
     private IInteractionHandler<UIColliderData> uiColliderHandler = new UIColliderHandler();
     private IInteractionHandler<InteractableCubeData> interactableCubeHandler = new InteractableCubeHandler();
@@ -105,6 +106,19 @@ public class Raycast : MonoBehaviour {
                     Pickupable = pickupable
                 }, crosshairActive, CrossHairNormal);
             }
+            else if (hit.collider.CompareTag("HelpParrot"))
+            {
+                if (raycastedObj != null && raycastedObj != hit.collider.gameObject)
+                {
+                    CrossHairNormal();
+                }
+                raycastedObj = GetTopMostParent(hit.collider.gameObject, "HelpParrot");
+                InteractableObject interactable = raycastedObj.GetComponent<InteractableObject>();
+                interactableParrotHandler.Handle(new InteractableParrotData
+                {
+                    Interactable = interactable
+                }, crosshairActive, CrossHairNormal);
+            }
         }
         else
         {
@@ -112,9 +126,9 @@ public class Raycast : MonoBehaviour {
         }
     }
 
-    GameObject GetTopMostParent(GameObject obj)
+    GameObject GetTopMostParent(GameObject obj, string tag = null)
     {
-        while (obj.transform.parent != null)
+        while (obj.transform.parent != null && (tag == null || obj.transform.parent.CompareTag(tag)))
         {
             obj = obj.transform.parent.gameObject;
         }
@@ -132,7 +146,7 @@ public class Raycast : MonoBehaviour {
             }
             else
             {
-                ChangeObjectColor(Color.cyan);
+                ChangeObjectColor(Color.blue);
             }
         }
     }
