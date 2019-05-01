@@ -53,7 +53,7 @@
     },
     "wordBoard": {
       "incorrectWords": ["something", "brooklyn 99", "avengers", "one more word", "retriver", "balz", "answer", "computer"],
-      "correctWords": ["golden"]
+      "correctWords": ["golden", "buzzer"]
     }
   }
 }
