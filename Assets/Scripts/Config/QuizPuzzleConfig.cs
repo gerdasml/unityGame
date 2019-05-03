@@ -10,9 +10,12 @@ public class QuizPuzzleConfig {
     private int numberOfAnswersNeeded;
     [SerializeField]
     private List<QuizQuestion> questions;
+    [SerializeField]
+    private List<string> helps;
 
     public int NumberOfAnswersNeeded { get { return numberOfAnswersNeeded; } }
     public List<QuizQuestion> Questions { get { return questions; } }
+    public List<string> Helps { get { return helps; } }
 }
 
 [Serializable]

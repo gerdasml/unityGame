@@ -113,10 +113,10 @@ public class Raycast : MonoBehaviour {
                     CrossHairNormal();
                 }
                 raycastedObj = GetTopMostParent(hit.collider.gameObject, "HelpParrot");
-                InteractableObject interactable = raycastedObj.GetComponent<InteractableObject>();
+                InteractableNPC interactable = raycastedObj.GetComponent<InteractableNPC>();
                 interactableParrotHandler.Handle(new InteractableParrotData
                 {
-                    Interactable = interactable
+                    NPC = interactable
                 }, crosshairActive, CrossHairNormal);
             }
         }

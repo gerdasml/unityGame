@@ -10,6 +10,8 @@ public class ComputerPuzzleConfig {
     private string code;
     [SerializeField]
     private string expectedAnswer;
+    [SerializeField]
+    private List<string> helps;
 
     public string Code
     {
@@ -24,6 +26,14 @@ public class ComputerPuzzleConfig {
         get
         {
             return expectedAnswer;
+        }
+    }
+
+    public List<string> Helps
+    {
+        get
+        {
+            return helps;
         }
     }
 }

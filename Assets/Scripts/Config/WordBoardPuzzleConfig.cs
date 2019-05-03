@@ -10,6 +10,8 @@ public class WordBoardPuzzleConfig {
     private List<string> incorrectWords;
     [SerializeField]
     private List<string> correctWords;
+    [SerializeField]
+    private List<string> helps;
 
     public List<string> IncorrectWords
     {
@@ -24,6 +26,14 @@ public class WordBoardPuzzleConfig {
         get
         {
             return correctWords;
+        }
+    }
+
+    public List<string> Helps
+    {
+        get
+        {
+            return helps;
         }
     }
 }

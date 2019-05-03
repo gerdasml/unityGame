@@ -9,6 +9,7 @@ TagManager:
   - UICollider
   - InteractableInstruction
   - InteractableCube
+  - HelpParrot
   layers:
   - Default
   - TransparentFX
