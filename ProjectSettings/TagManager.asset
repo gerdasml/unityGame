@@ -10,6 +10,7 @@ TagManager:
   - InteractableInstruction
   - InteractableCube
   - HelpParrot
+  - FunNPC
   layers:
   - Default
   - TransparentFX

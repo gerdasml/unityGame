@@ -21,6 +21,7 @@ public class Raycast : MonoBehaviour {
     private IInteractionHandler<ComputerPanelEntryData> computerPanelEntryHandler = new ComputerPanelEntryHandler();
     private IInteractionHandler<UIColliderData> uiColliderHandler = new UIColliderHandler();
     private IInteractionHandler<InteractableCubeData> interactableCubeHandler = new InteractableCubeHandler();
+    private IInteractionHandler<InteractableFunNPCData> interactableFunNpcHandler = new InteractableFunNPCHandler();
 
     void Update()
     {
@@ -117,6 +118,19 @@ public class Raycast : MonoBehaviour {
                 interactableParrotHandler.Handle(new InteractableParrotData
                 {
                     NPC = interactable
+                }, crosshairActive, CrossHairNormal);
+            }
+            else if (hit.collider.CompareTag("FunNPC"))
+            {
+                if (raycastedObj != null && raycastedObj != hit.collider.gameObject)
+                {
+                    CrossHairNormal();
+                }
+                raycastedObj = GetTopMostParent(hit.collider.gameObject, "FunNPC");
+                InteractableObject interactable = raycastedObj.GetComponent<InteractableObject>();
+                interactableFunNpcHandler.Handle(new InteractableFunNPCData
+                {
+                    FunNpc = interactable
                 }, crosshairActive, CrossHairNormal);
             }
         }
