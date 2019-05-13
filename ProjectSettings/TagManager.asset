@@ -11,6 +11,8 @@ TagManager:
   - InteractableCube
   - HelpParrot
   - FunNPC
+  - TableTop
+  - SafeButton
   layers:
   - Default
   - TransparentFX

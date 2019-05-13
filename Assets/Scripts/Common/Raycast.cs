@@ -133,6 +133,15 @@ public class Raycast : MonoBehaviour {
                     FunNpc = interactable
                 }, crosshairActive, CrossHairNormal);
             }
+            else if (hit.collider.CompareTag("SafePanel"))
+            {
+                if (raycastedObj != null && raycastedObj != hit.collider.gameObject)
+                {
+                    CrossHairNormal();
+                }
+                raycastedObj = GetTopMostParent(hit.collider.gameObject, "SafePanel");
+                crosshairActive();
+            }
         }
         else
         {
@@ -158,6 +167,17 @@ public class Raycast : MonoBehaviour {
             {
                 ChangeObjectColor(new Color(0, 255, 255, 0.85f));
             }
+            else if (raycastedObj.CompareTag("SafePanel"))
+            {
+                var x = raycastedObj.transform.parent.childCount;
+                for (int i = 0; i < x; i++)
+                {
+                    if (raycastedObj.transform.parent.GetChild(i).CompareTag("SafeButton"))
+                    {
+                        ChangeObjectColor(Color.blue, raycastedObj.transform.parent.GetChild(i).gameObject);
+                    }
+                }
+            }
             else
             {
                 ChangeObjectColor(Color.blue);
@@ -170,7 +190,18 @@ public class Raycast : MonoBehaviour {
         uiCrosshair.color = Color.white;
         if (raycastedObj != null)
         {
-            if (raycastedObj.GetComponent<Image>() != null)
+            if (raycastedObj.CompareTag("SafePanel"))
+            {
+                var x = raycastedObj.transform.parent.childCount;
+                for(int i = 0; i < x; i++)
+                {
+                    if (raycastedObj.transform.parent.GetChild(i).CompareTag("SafeButton"))
+                    {
+                        ChangeObjectColor(Color.white, raycastedObj.transform.parent.GetChild(i).gameObject);
+                    }
+                }
+            }
+            else if (raycastedObj.GetComponent<Image>() != null)
             {
                 ChangeObjectColor(new Color(0, 0, 0, 0.85f));
             }
@@ -181,23 +212,24 @@ public class Raycast : MonoBehaviour {
         }
     }
 
-    void ChangeObjectColor(Color color)
+    void ChangeObjectColor(Color color, GameObject game = null)
     {
-        if (raycastedObj.GetComponent<Renderer>() != null)
+        if (game == null) game = raycastedObj;
+        if (game.GetComponent<Renderer>() != null)
         {
-            raycastedObj.GetComponent<Renderer>().material.color = color; // kai ziurim, pakeiciu objekto spalva i raudona
+            game.GetComponent<Renderer>().material.color = color; 
         }
-        else if(raycastedObj.GetComponent<Text>() != null)
+        else if(game.GetComponent<Text>() != null)
         {
-            raycastedObj.GetComponent<Text>().color = color;
+            game.GetComponent<Text>().color = color;
         }
-        else if(raycastedObj.GetComponent<Image>() != null)
+        else if(game.GetComponent<Image>() != null)
         {
-            raycastedObj.GetComponent<Image>().color = color;
+            game.GetComponent<Image>().color = color;
         }
         else
         {
-            foreach (var r in raycastedObj.GetComponentsInChildren<Renderer>())
+            foreach (var r in game.GetComponentsInChildren<Renderer>())
             {
                 r.material.color = color;
             }

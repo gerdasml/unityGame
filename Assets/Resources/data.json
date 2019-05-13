@@ -46,15 +46,19 @@
           ]
         }
       ],
-      "helps":  ["You go gurl", "Woooooow", "I love saula waula"]
+      "helps": [ "You go gurl", "Woooooow", "I love saula waula" ]
     },
     "computer": {
       "code": "What is 2+2x2+2",
       "expectedAnswer": "8"
     },
     "wordBoard": {
-      "incorrectWords": ["something", "brooklyn 99", "avengers", "one more word", "retriver", "balz", "answer", "computer"],
-      "correctWords": ["golden", "buzzer"]
+      "incorrectWords": [ "something", "brooklyn 99", "avengers", "one more word", "retriver", "balz", "answer", "computer" ],
+      "correctWords": [ "golden", "buzzer" ]
+    },
+    "cubes": {
+      "questions": [ "Int", "String", "Float", "Char", "Boolean" ],
+      "answers": [ "5", "Amazing", "9.1", "A", "true" ]
     }
   }
 }
