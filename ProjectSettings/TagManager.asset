@@ -13,6 +13,7 @@ TagManager:
   - FunNPC
   - TableTop
   - SafeButton
+  - SafePanel
   layers:
   - Default
   - TransparentFX
