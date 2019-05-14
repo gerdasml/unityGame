@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,6 +7,7 @@ using UnityEngine.UI;
 public class Raycast : MonoBehaviour {
 
     private GameObject raycastedObj;
+    private Color prevColor = Color.white;
 
     [SerializeField] private int rayLengt = 10;
     [SerializeField] private LayerMask layerMaskInteract;
@@ -36,6 +38,7 @@ public class Raycast : MonoBehaviour {
                 {
                     CrossHairNormal();
                 }
+                prevColor = GetObjectColor(GetTopMostParent(hit.collider.gameObject));
                 raycastedObj = GetTopMostParent(hit.collider.gameObject);
                 InteractableObject interactable = raycastedObj.GetComponent<InteractableObject>();
                 interactableObjectHandler.Handle(new InteractableObjectData
@@ -54,6 +57,7 @@ public class Raycast : MonoBehaviour {
                 {
                     CrossHairNormal();
                 }
+                prevColor = GetObjectColor(GetTopMostParent(hit.collider.gameObject));
                 raycastedObj = GetTopMostParent(hit.collider.gameObject);
                 InteractableObject interactable = raycastedObj.GetComponent<InteractableObject>();
                 UIEntryPoint uiEntryPoint = raycastedObj.GetComponent<UIEntryPoint>();
@@ -70,6 +74,7 @@ public class Raycast : MonoBehaviour {
                 {
                     CrossHairNormal();
                 }
+                prevColor = GetObjectColor(hit.collider.gameObject.transform.Find("Text").gameObject);
                 raycastedObj = hit.collider.gameObject.transform.Find("Text").gameObject;
                 var board = GetTopMostParent(raycastedObj);
                 var boardHandler = board.GetComponent<BoardHandler>();
@@ -84,6 +89,11 @@ public class Raycast : MonoBehaviour {
             }
             else if (hit.collider.CompareTag("InteractableInstruction"))
             {
+                if (raycastedObj != null && raycastedObj != hit.collider.gameObject)
+                {
+                    CrossHairNormal();
+                }
+                prevColor = GetObjectColor(hit.collider.gameObject);
                 raycastedObj = hit.collider.gameObject;
                 crosshairActive();
                 if (Input.GetKeyDown("e"))
@@ -97,6 +107,7 @@ public class Raycast : MonoBehaviour {
                 {
                     CrossHairNormal();
                 }
+                prevColor = GetObjectColor(hit.collider.gameObject);
                 raycastedObj = hit.collider.gameObject;
                 InteractableObject interactable = raycastedObj.GetComponent<InteractableObject>();
                 PickupableObject pickupable = raycastedObj.GetComponent<PickupableObject>();
@@ -113,6 +124,7 @@ public class Raycast : MonoBehaviour {
                 {
                     CrossHairNormal();
                 }
+                prevColor = GetObjectColor(GetTopMostParent(hit.collider.gameObject, "HelpParrot"));
                 raycastedObj = GetTopMostParent(hit.collider.gameObject, "HelpParrot");
                 InteractableNPC interactable = raycastedObj.GetComponent<InteractableNPC>();
                 interactableParrotHandler.Handle(new InteractableParrotData
@@ -126,6 +138,7 @@ public class Raycast : MonoBehaviour {
                 {
                     CrossHairNormal();
                 }
+                prevColor = GetObjectColor(GetTopMostParent(hit.collider.gameObject, "FunNPC"));
                 raycastedObj = GetTopMostParent(hit.collider.gameObject, "FunNPC");
                 InteractableObject interactable = raycastedObj.GetComponent<InteractableObject>();
                 interactableFunNpcHandler.Handle(new InteractableFunNPCData
@@ -139,6 +152,7 @@ public class Raycast : MonoBehaviour {
                 {
                     CrossHairNormal();
                 }
+                prevColor = GetObjectColor(GetTopMostParent(hit.collider.gameObject, "SafePanel"));
                 raycastedObj = GetTopMostParent(hit.collider.gameObject, "SafePanel");
                 crosshairActive();
             }
@@ -187,7 +201,6 @@ public class Raycast : MonoBehaviour {
 
     void CrossHairNormal()
     {
-        uiCrosshair.color = Color.white;
         if (raycastedObj != null)
         {
             if (raycastedObj.CompareTag("SafePanel"))
@@ -207,7 +220,7 @@ public class Raycast : MonoBehaviour {
             }
             else
             {
-                ChangeObjectColor(Color.white);
+                ChangeObjectColor(prevColor);
             }
         }
     }
@@ -234,5 +247,35 @@ public class Raycast : MonoBehaviour {
                 r.material.color = color;
             }
         }
+    }
+
+    Color GetObjectColor(GameObject game = null)
+    {
+        if (game == raycastedObj) return prevColor;
+        if (game == null)
+        {
+            game = raycastedObj;
+                return Color.white;
+        }
+        if (game.GetComponent<Renderer>() != null)
+        {
+            return game.GetComponent<Renderer>().material.color;
+        }
+        else if (game.GetComponent<Text>() != null)
+        {
+            return game.GetComponent<Text>().color;
+        }
+        else if (game.GetComponent<Image>() != null)
+        {
+            return game.GetComponent<Image>().color;
+        }
+        else
+        {
+            foreach (var r in game.GetComponentsInChildren<Renderer>())
+            {
+                return r.material.color;
+            }
+        }
+        throw new Exception("Failed to get color");
     }
 }
