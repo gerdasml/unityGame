@@ -21,9 +21,6 @@ var doorTarget : Transform;
 var myClip : AudioClip;
 
 function Start () {
-
-
-
 }
 
 function Update () {

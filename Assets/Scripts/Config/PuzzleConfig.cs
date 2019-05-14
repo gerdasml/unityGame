@@ -14,8 +14,8 @@ public class PuzzleConfig {
     private QuizPuzzleConfig quiz;
     [SerializeField]
     private CubesPuzzleConfig cubes;
-    //[SerializeField]
-    //private BoatBoardConfig boatBoard;
+    [SerializeField]
+    private BoatBoardConfig boatBoard;
 
     public ComputerPuzzleConfig Computer
     {
@@ -42,5 +42,5 @@ public class PuzzleConfig {
         }
     }
 
-    //public BoatBoardConfig BoatBoard { get { return boatBoard; } }
+    public BoatBoardConfig BoatBoard { get { return boatBoard; } }
 }

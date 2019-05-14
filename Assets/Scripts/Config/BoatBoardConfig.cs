@@ -10,4 +10,7 @@ public class BoatBoardConfig {
     private string task;
     [SerializeField]
     private string answer;
+
+    public string Task { get { return task; } }
+    public string Answer { get { return answer; } }
 }
