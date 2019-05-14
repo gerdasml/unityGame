@@ -1,13 +1,21 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+
+
+struct ColorManager
+{
+    public Color originalColor;
+    public Action<Color> setColor;
+}
 
 public class Raycast : MonoBehaviour {
 
     private GameObject raycastedObj;
-    private Color prevColor = Color.white;
+    //private Color prevColor = Color.white;
 
     [SerializeField] private int rayLengt = 10;
     [SerializeField] private LayerMask layerMaskInteract;
@@ -38,7 +46,6 @@ public class Raycast : MonoBehaviour {
                 {
                     CrossHairNormal();
                 }
-                prevColor = GetObjectColor(GetTopMostParent(hit.collider.gameObject));
                 raycastedObj = GetTopMostParent(hit.collider.gameObject);
                 InteractableObject interactable = raycastedObj.GetComponent<InteractableObject>();
                 interactableObjectHandler.Handle(new InteractableObjectData
@@ -57,7 +64,6 @@ public class Raycast : MonoBehaviour {
                 {
                     CrossHairNormal();
                 }
-                prevColor = GetObjectColor(GetTopMostParent(hit.collider.gameObject));
                 raycastedObj = GetTopMostParent(hit.collider.gameObject);
                 InteractableObject interactable = raycastedObj.GetComponent<InteractableObject>();
                 UIEntryPoint uiEntryPoint = raycastedObj.GetComponent<UIEntryPoint>();
@@ -74,7 +80,6 @@ public class Raycast : MonoBehaviour {
                 {
                     CrossHairNormal();
                 }
-                prevColor = GetObjectColor(hit.collider.gameObject.transform.Find("Text").gameObject);
                 raycastedObj = hit.collider.gameObject.transform.Find("Text").gameObject;
                 var board = GetTopMostParent(raycastedObj);
                 var boardHandler = board.GetComponent<BoardHandler>();
@@ -93,7 +98,6 @@ public class Raycast : MonoBehaviour {
                 {
                     CrossHairNormal();
                 }
-                prevColor = GetObjectColor(hit.collider.gameObject);
                 raycastedObj = hit.collider.gameObject;
                 crosshairActive();
                 if (Input.GetKeyDown("e"))
@@ -107,7 +111,6 @@ public class Raycast : MonoBehaviour {
                 {
                     CrossHairNormal();
                 }
-                prevColor = GetObjectColor(hit.collider.gameObject);
                 raycastedObj = hit.collider.gameObject;
                 InteractableObject interactable = raycastedObj.GetComponent<InteractableObject>();
                 PickupableObject pickupable = raycastedObj.GetComponent<PickupableObject>();
@@ -124,7 +127,6 @@ public class Raycast : MonoBehaviour {
                 {
                     CrossHairNormal();
                 }
-                prevColor = GetObjectColor(GetTopMostParent(hit.collider.gameObject, "HelpParrot"));
                 raycastedObj = GetTopMostParent(hit.collider.gameObject, "HelpParrot");
                 InteractableNPC interactable = raycastedObj.GetComponent<InteractableNPC>();
                 interactableParrotHandler.Handle(new InteractableParrotData
@@ -138,7 +140,6 @@ public class Raycast : MonoBehaviour {
                 {
                     CrossHairNormal();
                 }
-                prevColor = GetObjectColor(GetTopMostParent(hit.collider.gameObject, "FunNPC"));
                 raycastedObj = GetTopMostParent(hit.collider.gameObject, "FunNPC");
                 InteractableObject interactable = raycastedObj.GetComponent<InteractableObject>();
                 interactableFunNpcHandler.Handle(new InteractableFunNPCData
@@ -152,7 +153,6 @@ public class Raycast : MonoBehaviour {
                 {
                     CrossHairNormal();
                 }
-                prevColor = GetObjectColor(GetTopMostParent(hit.collider.gameObject, "SafePanel"));
                 raycastedObj = GetTopMostParent(hit.collider.gameObject, "SafePanel");
                 crosshairActive();
             }
@@ -179,7 +179,7 @@ public class Raycast : MonoBehaviour {
         {
             if (raycastedObj.GetComponent<Image>() != null)
             {
-                ChangeObjectColor(new Color(0, 255, 255, 0.85f));
+                SetColors(raycastedObj, new Color(0, 255, 255, 0.85f));
             }
             else if (raycastedObj.CompareTag("SafePanel"))
             {
@@ -188,13 +188,13 @@ public class Raycast : MonoBehaviour {
                 {
                     if (raycastedObj.transform.parent.GetChild(i).CompareTag("SafeButton"))
                     {
-                        ChangeObjectColor(Color.blue, raycastedObj.transform.parent.GetChild(i).gameObject);
+                        SetColors(raycastedObj.transform.parent.GetChild(i).gameObject, Color.blue);
                     }
                 }
             }
             else
             {
-                ChangeObjectColor(Color.blue);
+                SetColors(raycastedObj, Color.blue);
             }
         }
     }
@@ -210,72 +210,80 @@ public class Raycast : MonoBehaviour {
                 {
                     if (raycastedObj.transform.parent.GetChild(i).CompareTag("SafeButton"))
                     {
-                        ChangeObjectColor(Color.white, raycastedObj.transform.parent.GetChild(i).gameObject);
+                        SetColors(raycastedObj.transform.parent.GetChild(i).gameObject);
                     }
                 }
             }
             else if (raycastedObj.GetComponent<Image>() != null)
             {
-                ChangeObjectColor(new Color(0, 0, 0, 0.85f));
+                SetColors(raycastedObj);
             }
             else
             {
-                ChangeObjectColor(prevColor);
+                SetColors(raycastedObj);
             }
         }
     }
 
-    void ChangeObjectColor(Color color, GameObject game = null)
+    
+    private Dictionary<UnityEngine.Object, ColorManager> originalColors = new Dictionary<UnityEngine.Object, ColorManager>();
+
+    private Dictionary<UnityEngine.Object, ColorManager> Decompose(GameObject game)
     {
-        if (game == null) game = raycastedObj;
+        var result = new Dictionary<UnityEngine.Object, ColorManager>();
         if (game.GetComponent<Renderer>() != null)
         {
-            game.GetComponent<Renderer>().material.color = color; 
-        }
-        else if(game.GetComponent<Text>() != null)
-        {
-            game.GetComponent<Text>().color = color;
-        }
-        else if(game.GetComponent<Image>() != null)
-        {
-            game.GetComponent<Image>().color = color;
-        }
-        else
-        {
-            foreach (var r in game.GetComponentsInChildren<Renderer>())
+            result[game.GetComponent<Renderer>()] = new ColorManager()
             {
-                r.material.color = color;
-            }
-        }
-    }
-
-    Color GetObjectColor(GameObject game = null)
-    {
-        if (game == raycastedObj) return prevColor;
-        if (game == null)
-        {
-            game = raycastedObj;
-                return Color.white;
-        }
-        if (game.GetComponent<Renderer>() != null)
-        {
-            return game.GetComponent<Renderer>().material.color;
+                originalColor = game.GetComponent<Renderer>().material.color,
+                setColor = color => game.GetComponent<Renderer>().material.color = color
+            };
         }
         else if (game.GetComponent<Text>() != null)
         {
-            return game.GetComponent<Text>().color;
+            result[game.GetComponent<Text>()] = new ColorManager()
+            {
+                originalColor = game.GetComponent<Text>().color,
+                setColor = color => game.GetComponent<Text>().color = color
+            };
         }
         else if (game.GetComponent<Image>() != null)
         {
-            return game.GetComponent<Image>().color;
+            result[game.GetComponent<Image>()] = new ColorManager()
+            {
+                originalColor = game.GetComponent<Image>().color,
+                setColor = color => game.GetComponent<Image>().color = color
+            };
         }
         else
         {
             foreach (var r in game.GetComponentsInChildren<Renderer>())
             {
-                return r.material.color;
+                result[r] = new ColorManager()
+                {
+                    originalColor = r.material.color,
+                    setColor = color => r.material.color = color
+                };
             }
         }
-        throw new Exception("Failed to get color");
+        return result;
+    }
+
+    private void SaveOriginalColors(GameObject obj)
+    {
+        Decompose(obj)
+            .Where(part => !originalColors.ContainsKey(part.Key))
+            .ToList()
+            .ForEach(part => originalColors[part.Key] = part.Value);
+    }
+
+    private void SetColors(GameObject obj, Color? color = null)
+    {
+        SaveOriginalColors(obj);
+        Decompose(obj)
+            .ToList()
+            .ForEach(part =>
+                part.Value.setColor(color.HasValue ? color.Value : originalColors[part.Key].originalColor)
+            );
     }
 }

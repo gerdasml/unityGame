@@ -59,6 +59,10 @@
     "cubes": {
       "questions": [ "Int", "String", "Float", "Char", "Boolean" ],
       "answers": [ "5", "Amazing", "9.1", "A", "true" ]
+    },
+    "boatBoard": {
+      "task": "Answer 3639",
+      "answer": "3639"
     }
   }
 }
