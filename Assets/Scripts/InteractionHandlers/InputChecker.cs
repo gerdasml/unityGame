@@ -7,7 +7,7 @@ public class InputChecker : MonoBehaviour {
 
     public InputField input;
     public ScreenManager screenManager;
-    public GameObject lockedObject;
+    public List<GameObject> lockedObjects;
     public GameObject computer;
     public Inventory inventory;
     public Text taskText;
@@ -31,7 +31,10 @@ public class InputChecker : MonoBehaviour {
                 }
 
                 screenManager.CloseScreen();
-                lockedObject.SetActive(true);
+                for (int i = 0; i < lockedObjects.Count; i++)
+                {
+                    lockedObjects[i].SetActive(true);
+                }
                 Destroy(computer.GetComponent<InteractableObject>());
             }
             input.text = "";
