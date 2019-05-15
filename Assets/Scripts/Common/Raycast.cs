@@ -99,9 +99,19 @@ public class Raycast : MonoBehaviour {
                     CrossHairNormal();
                 }
                 raycastedObj = hit.collider.gameObject;
+                InteractableObject interactable = raycastedObj.GetComponent<InteractableObject>();
+                if (interactable != null && !interactable.dependencies.TrueForAll(d => inventory.ContainsItem(d))) return;
                 crosshairActive();
                 if (Input.GetKeyDown("e"))
                 {
+                    if(interactable != null)
+                    {
+                        List<InteractableObject> dependencies = interactable.dependencies;
+                        foreach (var d in dependencies)
+                        {
+                            inventory.RemoveItem(d);
+                        }
+                    }
                     raycastedObj.SetActive(false);
                 }
             }

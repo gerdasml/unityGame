@@ -16,6 +16,8 @@ public class PuzzleConfig {
     private CubesPuzzleConfig cubes;
     [SerializeField]
     private BoatBoardConfig boatBoard;
+    [SerializeField]
+    private InstructionsParrotConfig instructionsParrot;
 
     public ComputerPuzzleConfig Computer
     {
@@ -43,4 +45,6 @@ public class PuzzleConfig {
     }
 
     public BoatBoardConfig BoatBoard { get { return boatBoard; } }
+
+    public InstructionsParrotConfig InstructionsParrot { get { return instructionsParrot; } }
 }

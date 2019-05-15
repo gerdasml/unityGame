@@ -46,23 +46,31 @@
           ]
         }
       ],
-      "helps": [ "You go gurl", "Woooooow", "I love saula waula" ]
+      "helps": [ "First you need to solve computer task", "There is only one right answer to each question", "Pick up objects after quiz ends" ]
     },
     "computer": {
       "code": "What is 2+2x2+2",
-      "expectedAnswer": "8"
+      "expectedAnswer": "8",
+      "helps": [ "You have to write the answer to the given question", "Pick up the tv remote and piece of paper" ]
     },
     "wordBoard": {
       "incorrectWords": [ "something", "brooklyn 99", "avengers", "one more word", "retriver", "balz", "answer", "computer" ],
-      "correctWords": [ "golden", "buzzer" ]
+      "correctWords": [ "golden", "buzzer" ],
+      "helps": [ "Solve cubes task to get pattern for correct word", "Choose correct word on the board using pattern", "Pick up the key" ]
     },
     "cubes": {
       "questions": [ "Int", "String", "Float", "Char", "Boolean" ],
-      "answers": [ "5", "Amazing", "9.1", "A", "true" ]
+      "answers": [ "5", "Amazing", "9.1", "A", "true" ],
+      "wordsBoardTask": "Answer is golden buzzer",
+      "helps": [ "You must open the fence with scissors", "Put cubes on correct tables by moving them", "Pick up objects that fell on the ground" ]
     },
     "boatBoard": {
       "task": "Answer 3639",
-      "answer": "3639"
+      "answer": "3639",
+      "helps": [ "You have to look at the safe", "With your keyboard enter code 3639", "Pick up objects that fell on the ground" ]
+    },
+    "instructionsParrot": {
+      "helps": ["When you see this parrot it means you can find some hints. To go to the next window press e.", "This way you will see all hints in different windows.", "To exit this window press e too."]
     }
   }
 }

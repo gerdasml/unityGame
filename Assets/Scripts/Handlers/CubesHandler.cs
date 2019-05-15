@@ -10,11 +10,13 @@ public class CubesHandler : MonoBehaviour
     private List<string> questions;
     public List<GameObject> cubes;
     public List<GameObject> tables;
+    public TextMeshPro wordsBoardTask;
 
     void Start()
     {
         questions = Config.Instance.Puzzle.Cubes.Questions;
         answers = Config.Instance.Puzzle.Cubes.Answers;
+        wordsBoardTask.text = Config.Instance.Puzzle.Cubes.WordsBoardTask;
         cubes.Shuffle();
         tables.Shuffle();
 
@@ -43,6 +45,9 @@ public class CubesHandler : MonoBehaviour
                 cnt++;
             }
         }
-        Debug.Log(cnt);
+        if(cnt == 5)
+        {
+
+        }
     }
 }
