@@ -54,15 +54,22 @@
       "helps": [ "You have to write the answer to the given question", "Pick up the tv remote and piece of paper" ]
     },
     "wordBoard": {
-      "incorrectWords": [ "something", "brooklyn 99", "avengers", "one more word", "retriver", "balz", "answer", "computer" ],
-      "correctWords": [ "golden", "buzzer" ],
-      "helps": [ "Solve cubes task to get pattern for correct word", "Choose correct word on the board using pattern", "Pick up the key" ]
+      "incorrectWords": [ "dddd", "156+d", "123456+", "169-", "1234+-156", "1d", "hello, 123+", "^abcdefgh$", "+370(638)36830", "+370+", "clickme", "15   +   6" ],
+      "correctWords": [ "d1", "169", "hello, 123", "156\\15", "+37012345678", "test test 123", "wrong1", "123+56*3/1-6", "abc156*123", "123456+15963" ],
+      "helps": [
+        "\"^\" matches start, \"$\" matches end of string.",
+        "\"\\d\" matches a single digit. \"\\D\" matches a single non-digit character.",
+        "\"+\" matches one or more times. \"*\" matches zero or more times.",
+        "\"\\\" escape special characters.",
+        "\"[\" and \"]\" enclose a list. Exactly one character from the list is matched.",
+        "\"(\" and \")\" enclose a group. Quantifiers (\"+\" or \"*\") can be applied to groups."
+      ]
     },
     "cubes": {
       "questions": [ "Int", "String", "Float", "Char", "Boolean" ],
       "answers": [ "5", "Amazing", "9.1", "A", "true" ],
-      "wordsBoardTask": "Answer is golden buzzer",
-      "helps": [ "You must open the fence with scissors", "Put cubes on correct tables by moving them", "Pick up objects that fell on the ground" ]
+      "wordsBoardTask": "^\\D*\\d+([\\+\\-\\*\\/]\\d+)*$",
+      "helps": [ "Firstly, you must open the fence with scissors.", "Put the cubes on correct tables by carying them.", "Pick up objects that fell on the ground." ]
     },
     "boatBoard": {
       "task": "Answer 3639",

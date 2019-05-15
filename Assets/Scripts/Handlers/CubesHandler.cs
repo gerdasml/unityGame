@@ -11,6 +11,8 @@ public class CubesHandler : MonoBehaviour
     public List<GameObject> cubes;
     public List<GameObject> tables;
     public TextMeshPro wordsBoardTask;
+    public List<GameObject> lockedObjects;
+    public Inventory inventory;
 
     void Start()
     {
@@ -47,7 +49,23 @@ public class CubesHandler : MonoBehaviour
         }
         if(cnt == 5)
         {
-
+            List<InteractableObject> dependencies = cubes[0].GetComponent<InteractableObject>().dependencies;
+            foreach (var d in dependencies)
+            {
+                inventory.RemoveItem(d);
+            }
+            for (int i = 0; i < lockedObjects.Count; i++)
+            {
+                lockedObjects[i].SetActive(true);
+            }
+            for (int i = 0; i < 5; i++)
+            {
+                Destroy(tables[i].GetComponent<InteractableObject>());
+                Destroy(cubes[i].GetComponent<InteractableObject>());
+                Destroy(tables[i]);
+                Destroy(cubes[i]);
+                Destroy(this);
+            }
         }
     }
 }

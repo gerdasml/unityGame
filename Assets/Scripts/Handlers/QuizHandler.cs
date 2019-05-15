@@ -76,6 +76,7 @@ public class QuizHandler : MonoBehaviour {
         {
             index = 0;
             questions.Shuffle();
+            FillButtonValues();
             for(int i = 0; i < requiredAnswers; i++)
             {
                 lightbulbs[i].color = Color.white;
