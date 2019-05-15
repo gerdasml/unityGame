@@ -9,9 +9,10 @@ public class QuizHandler : MonoBehaviour {
     public List<Button> choiceButtons;
     public ScreenManager screenManager;
     public GameObject tv;
-    public GameObject lockedObject;
     public GameObject lightbulbsPanel;
     public Image lightbulbTemplate;
+    public List<GameObject> lockedObjects;
+    public Inventory inventory;
 
     private int requiredAnswers;
     private List<QuizQuestion> questions;
@@ -55,10 +56,20 @@ public class QuizHandler : MonoBehaviour {
             index++;
             if (requiredAnswers == index)
             {
+                List<InteractableObject> dependencies = tv.GetComponent<InteractableObject>().dependencies;
+                foreach (var d in dependencies)
+                {
+                    inventory.RemoveItem(d);
+                }
                 screenManager.CloseScreen();
+                for (int i = 0; i < lockedObjects.Count; i++)
+                {
+                    lockedObjects[i].SetActive(true);
+                }
                 Destroy(tv.GetComponent<InteractableObject>());
+                return;
             }
-            
+
             FillButtonValues();
         }
         else
