@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class QuizHandler : MonoBehaviour {
     
-    public Text questionText;
+    public TextMeshProUGUI questionText;
     public List<Button> choiceButtons;
     public ScreenManager screenManager;
     public GameObject tv;

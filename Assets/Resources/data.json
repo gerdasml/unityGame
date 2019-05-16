@@ -1,57 +1,126 @@
 ﻿{
   "puzzles": {
     "quiz": {
-      "numberOfAnswersNeeded": 2,
+      "numberOfAnswersNeeded": 3,
       "questions": [
         {
-          "text": "Kada vyko Žalgirio mūšis?",
+          "text": "Which of the following is a contextual keyword in C#?",
           "choices": [
             {
-              "text": "1410",
+              "text": "get",
+              "isCorrect": false
+            },
+            {
+              "text": "set",
+              "isCorrect": false
+            },
+            {
+              "text": "add",
+              "isCorrect": false
+            },
+            {
+              "text": "All of them",
+              "isCorrect": true
+            }
+          ]
+        },
+        {
+          "text": "Which of the following operator returns the address of an variable in C#?",
+          "choices": [
+            {
+              "text": "sizeof",
+              "isCorrect": false
+            },
+            {
+              "text": "typeof",
+              "isCorrect": false
+            },
+            {
+              "text": "&",
               "isCorrect": true
             },
             {
-              "text": "1414",
-              "isCorrect": false
-            },
-            {
-              "text": "1234",
-              "isCorrect": false
-            },
-            {
-              "text": "2002",
+              "text": "*",
               "isCorrect": false
             }
           ]
         },
         {
-          "text": "Lietuvos nepriklausomybės atkūrimo diena",
+          "text": "Which of the following access specifier in C# allows a class to expose its member variables and member functions to other functions and objects?",
           "choices": [
             {
-              "text": "Vasario 16",
-              "isCorrect": false
-            },
-            {
-              "text": "Kovo 11",
+              "text": "Public",
               "isCorrect": true
             },
             {
-              "text": "Vasario 21",
+              "text": "Private",
               "isCorrect": false
             },
             {
-              "text": "Balandžio 17",
+              "text": "Protected",
+              "isCorrect": false
+            },
+            {
+              "text": "Internal",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "text": "Which of the following converts a floating point or integer type to a decimal type in C#?",
+          "choices": [
+            {
+              "text": "ToDecimal",
+              "isCorrect": true
+            },
+            {
+              "text": "ToDouble",
+              "isCorrect": false
+            },
+            {
+              "text": "ToInt16",
+              "isCorrect": false
+            },
+            {
+              "text": "ToInt32",
+              "isCorrect": false
+            }
+          ]
+        },
+        {
+          "text": "Which of the following preprocessor directive allows creating a compound conditional directive in C#?",
+          "choices": [
+            {
+              "text": "elif",
+              "isCorrect": true
+            },
+            {
+              "text": "define",
+              "isCorrect": false
+            },
+            {
+              "text": "if",
+              "isCorrect": false
+            },
+            {
+              "text": "else",
               "isCorrect": false
             }
           ]
         }
       ],
-      "helps": [ "First you need to solve computer task", "There is only one right answer to each question", "Pick up objects after quiz ends" ]
+      "helps": [ "There is only one right answer to each question."]
     },
     "computer": {
-      "code": "What is 2+2x2+2",
-      "expectedAnswer": "8",
-      "helps": [ "You have to write the answer to the given question", "Pick up the tv remote and piece of paper" ]
+      "code": "public enum Demo { a, b = 5, c, d}\r\nclass Program\r\n{\r\n    static void Main(string[] args)\r\n    {\r\n        Demo d = Demo.a;\r\n        d += 6;\r\n        Console.Write(d);\r\n        d += 6;\r\n        Console.Write(d);\r\n        Console.ReadLine();\r\n    }\r\n}",
+      "expectedAnswer": "c12",
+      "helps": [
+        "Enums are actually numbers.",
+        "By default, enum values are 0, 1, 2, ...",
+        "If a specific value is set, next number values continue from there.",
+        "The number values here are 0, 5, 6, 7.",
+        "An enum's label is printed only if the underlying value HAS a corresponding label."
+      ]
     },
     "wordBoard": {
       "incorrectWords": [ "dddd", "156+d", "123456+", "169-", "1234+-156", "1d", "hello, 123+", "^abcdefgh$", "+370(638)36830", "+370+", "clickme", "15   +   6" ],
@@ -69,15 +138,21 @@
       "questions": [ "Int", "String", "Float", "Char", "Boolean" ],
       "answers": [ "5", "Amazing", "9.1", "A", "true" ],
       "wordsBoardTask": "^\\D*\\d+([\\+\\-\\*\\/]\\d+)*$",
-      "helps": [ "Firstly, you must open the fence with scissors.", "Put the cubes on correct tables by carying them.", "Pick up objects that fell on the ground." ]
+      "helps": [ "Put the cubes on correct tables by carying them."]
     },
     "boatBoard": {
-      "task": "Answer 3639",
-      "answer": "3639",
-      "helps": [ "You have to look at the safe", "With your keyboard enter code 3639", "Pick up objects that fell on the ground" ]
+      "task": "var code = string.Join(\"\", \"17632949971127\".Where((c, i) => i % 2 == 0 ? c >= '5' : c < '7'));",
+      "answer": "6391",
+      "helps": [
+        "\"a ? b : c\" returns \"b\" if \"a\" is true and \"c\" otherwise.",
+        "\"Where(p)\" filters a sequence of elements based on the predicate \"p\".",
+        "\"c\" in this case denotes an element of the sequence and \"i\" - its index.",
+        "\"string.Join(d, s)\" joins the sequence \"s\" using a delimeter \"d\".",
+        "After filtering the first 3 characters, only the \"6\" is left."
+      ]
     },
     "instructionsParrot": {
-      "helps": ["When you see this parrot it means you can find some hints. To go to the next window press e.", "This way you will see all hints in different windows.", "To exit this window press e too."]
+      "helps": [ "Hi, I’m polly!", "Wow, there’s sure a lot of water around. That must be important...", "What are you standing around for? Go look around the shore!" ]
     }
   }
 }

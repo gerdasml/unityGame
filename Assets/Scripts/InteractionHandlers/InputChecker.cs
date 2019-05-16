@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,7 +11,7 @@ public class InputChecker : MonoBehaviour {
     public List<GameObject> lockedObjects;
     public GameObject computer;
     public Inventory inventory;
-    public Text taskText;
+    public TextMeshProUGUI taskText;
     private string secretPhrase;
 
     void Start()
