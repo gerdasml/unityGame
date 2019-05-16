@@ -189,7 +189,7 @@ public class Raycast : MonoBehaviour {
         {
             if (raycastedObj.GetComponent<Image>() != null)
             {
-                SetColors(raycastedObj, new Color(0, 255, 255, 0.85f));
+                SetColors(raycastedObj, new Color(0, 0, 255, 0.85f));
             }
             else if (raycastedObj.CompareTag("SafePanel"))
             {

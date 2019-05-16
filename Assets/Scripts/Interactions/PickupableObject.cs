@@ -5,7 +5,7 @@ using UnityEngine;
 public class PickupableObject : MonoBehaviour {
     public bool isBeingCarried;
     GameObject mainCamera;
-    float distance = 1;
+    float distance = 2;
 
     // Use this for initialization
     void Start () {
