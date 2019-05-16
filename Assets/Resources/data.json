@@ -144,6 +144,7 @@
       "task": "var code = string.Join(\"\", \"17632949971127\".Where((c, i) => i % 2 == 0 ? c >= '5' : c < '7'));",
       "answer": "6391",
       "helps": [
+        "Safe is special interactable object. You dont't need to press e - just enter the numbers.",
         "\"a ? b : c\" returns \"b\" if \"a\" is true and \"c\" otherwise.",
         "\"Where(p)\" filters a sequence of elements based on the predicate \"p\".",
         "\"c\" in this case denotes an element of the sequence and \"i\" - its index.",

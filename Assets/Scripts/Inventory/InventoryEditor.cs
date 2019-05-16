@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
-
+#if UNITY_EDITOR
 [CustomEditor (typeof(Inventory))]
 public class InventoryEditor : Editor {
 
@@ -19,7 +19,7 @@ public class InventoryEditor : Editor {
         itemImagesProperty = serializedObject.FindProperty(inventoryPropItemImagesName);
         itemsProperty = serializedObject.FindProperty(inventoryPropItemsName);
     }
-
+    
     public override void OnInspectorGUI()
     {
         serializedObject.Update();
@@ -31,7 +31,7 @@ public class InventoryEditor : Editor {
 
         serializedObject.ApplyModifiedProperties();
     }
-
+    
     private void ItemSlotGUI(int index)
     {
         EditorGUILayout.BeginVertical(GUI.skin.box);
@@ -48,4 +48,5 @@ public class InventoryEditor : Editor {
         EditorGUILayout.EndVertical();
     }
 }
+#endif
 

@@ -17,11 +17,11 @@ public class BoardHandler : MonoBehaviour {
 
     public void Reshuffle()
     {
-        correctAnswer = correctWords[0];
         incorrectWords.Shuffle();
         correctWords.Shuffle();
         List<string> boardWords = incorrectWords.GetRange(0, 8);
-        boardWords.Add(correctWords[0]);
+        correctAnswer = correctWords[0];
+        boardWords.Add(correctAnswer);
         boardWords.Shuffle();
         for(int i = 0; i<9; i++)
         {
